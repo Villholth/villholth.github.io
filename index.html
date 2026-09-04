@@ -124,16 +124,20 @@
     box-shadow: 0 2px 4px rgba(22,24,29,.06), 0 24px 48px -28px rgba(22,24,29,.3);
   }
   .app-topp { display: flex; align-items: center; gap: 16px; }
+  /* Flex-barn må få lov å krympe — ellers presser lange mono-linjer
+     navnet ut av kortet på smale skjermer */
+  .app-topp > div { flex: 1; min-width: 0; }
   .app-topp img {
     width: 62px; height: 62px; border-radius: 14.5px;
     box-shadow: 0 4px 14px rgba(22,24,29,.18);
   }
   .app-navn { font-size: 1.3rem; font-weight: 750; letter-spacing: -.015em; }
   .status {
-    display: inline-flex; align-items: center; gap: 7px;
+    display: flex; align-items: flex-start; gap: 7px;
     margin-top: 3px; color: var(--blekk2);
   }
   .status .prikk {
+    flex: none; margin-top: .42em;
     width: 8px; height: 8px; border-radius: 50%; background: var(--gronn);
   }
   .status .prikk.bygges {
