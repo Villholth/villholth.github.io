@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="nb">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Daniel Hellenes – apper for kysten</title>
+<meta name="description" content="Flo og Fjære og Hummerfiske — apper for livet langs norskekysten. Tidevann uten internett, og teiner, fangst og fredningssoner. Laget på fritiden, av en som bruker dem selv.">
+<meta property="og:title" content="Daniel Hellenes – apper for kysten">
+<meta property="og:description" content="Flo og Fjære og Hummerfiske — apper for livet langs norskekysten.">
+<meta property="og:image" content="https://villholth.github.io/og-bilde.png">
+<meta property="og:url" content="https://villholth.github.io/">
+<link rel="icon" href="/ikon.png">
+<link rel="apple-touch-icon" href="/ikon.png">
+<style>
+  /* ============================================================
+     Havna — samlesiden for appene. Felles bølgespråk (tynne
+     strøkne linjer i drift), én bøye per app på vannlinja.
+     ============================================================ */
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  :root {
+    --natt: #0A2036;
+    --sjo: #123A5C;
+    --himmel: #1E5580;
+    --skum: #F4F9FC;
+    --tekst: #F4F9FC;
+    --tekst2: rgba(244,249,252,.78);
+    --tekst3: rgba(244,249,252,.55);
+    --glass: rgba(244,249,252,.06);
+    --glasskant: rgba(244,249,252,.12);
+    /* Appenes egne aksenter */
+    --fof: #8FD8FF;
+    --hummer: #FF9C8C;
+  }
+  body {
+    font-family: -apple-system, system-ui, "Segoe UI", Roboto, sans-serif;
+    color: var(--tekst);
+    background: linear-gradient(180deg, var(--himmel) 0, var(--sjo) 46%, var(--natt) 100%);
+    min-height: 100svh;
+    overflow-x: hidden;
+  }
+  h1, h2, h3 {
+    font-family: ui-rounded, -apple-system, system-ui, sans-serif;
+    letter-spacing: -.015em;
+  }
+  a { color: var(--skum); }
+
+  /* ---------- Hero med vannlinje og to bøyer ---------- */
+  .hero { position: relative; overflow: hidden; padding: clamp(56px, 12vh, 110px) 24px 88px; text-align: center; }
+  .hero h1 { font-size: clamp(2.1rem, 6vw, 2.9rem); font-weight: 800; }
+  .hero .tagline {
+    margin: 12px auto 0; max-width: 480px;
+    font-size: clamp(1.02rem, 3vw, 1.2rem); color: var(--tekst2); line-height: 1.6;
+  }
+  .vannlinje {
+    position: absolute; left: -10%; width: 120%; height: 26px; bottom: 34px;
+    pointer-events: none;
+  }
+  .vannlinje svg { width: 200%; height: 100%; display: block; }
+  .vl-1 svg { animation: driv 15s linear infinite; }
+  .vl-2 { bottom: 25px; opacity: .4; }
+  .vl-2 svg { animation: driv 21s linear infinite reverse; }
+  @keyframes driv { to { transform: translateX(-50%); } }
+
+  /* To bøyer på linja — én per app */
+  .boye {
+    position: absolute; bottom: 40px; width: 20px; height: 20px;
+    border-radius: 50%; border: 2px solid rgba(244,249,252,.9);
+    box-shadow: 0 3px 10px rgba(0,0,0,.35);
+    animation: ri 5s ease-in-out infinite;
+  }
+  .boye-fof { left: calc(50% - 60px); background: var(--fof); }
+  .boye-hummer { left: calc(50% + 40px); background: var(--hummer); animation-delay: 1.6s; }
+  @keyframes ri { 0%,100% { transform: translateY(0); } 50% { transform: translateY(4px); } }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation: none !important; }
+  }
+
+  /* ---------- Appkortene ---------- */
+  main { max-width: 760px; margin: 0 auto; padding: 10px 24px 20px; }
+  .kort-rad { display: grid; gap: 18px; }
+  @media (min-width: 640px) { .kort-rad { grid-template-columns: 1fr 1fr; } }
+  .appkort {
+    padding: 26px; border-radius: 24px;
+    background: var(--glass); border: 1px solid var(--glasskant);
+    display: flex; flex-direction: column; gap: 12px;
+    transition: transform .15s ease, background .15s ease;
+  }
+  .appkort:hover { transform: translateY(-2px); background: rgba(244,249,252,.09); }
+  .appkort.fof { border-color: rgba(143,216,255,.35); }
+  .appkort.hummer { border-color: rgba(255,156,140,.35); }
+  .appkort img.ikon {
+    width: 72px; height: 72px; border-radius: 17px;
+    box-shadow: 0 8px 22px rgba(0,0,0,.35);
+  }
+  .appkort h2 { font-size: 1.35rem; }
+  .appkort .tag { font-weight: 600; }
+  .fof .tag { color: var(--fof); }
+  .hummer .tag { color: var(--hummer); }
+  .appkort p.om { color: var(--tekst2); line-height: 1.65; font-size: .98rem; flex: 1; }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+  .chip {
+    padding: 6px 13px; border-radius: 999px; font-size: .84rem;
+    background: rgba(244,249,252,.07); border: 1px solid var(--glasskant);
+  }
+  .handling { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; margin-top: 4px; }
+  .handling img.badge { display: block; height: 44px; width: auto; }
+  a.knapp {
+    display: inline-block; padding: 11px 20px; border-radius: 999px;
+    font-weight: 650; font-size: .95rem; text-decoration: none;
+    color: var(--natt);
+  }
+  .fof a.knapp { background: var(--fof); }
+  .hummer a.knapp { background: var(--hummer); }
+  a.lenke {
+    font-size: .95rem; font-weight: 600; color: var(--tekst2);
+    text-decoration: underline; text-underline-offset: 3px;
+  }
+  a.knapp:focus-visible, a:focus-visible { outline: 2px solid var(--skum); outline-offset: 3px; }
+
+  /* ---------- Om / kontakt ---------- */
+  .om-meg {
+    margin-top: 18px; padding: 24px; border-radius: 24px;
+    background: var(--glass); border: 1px solid var(--glasskant);
+  }
+  .om-meg h2 { font-size: 1.1rem; margin-bottom: 8px; }
+  .om-meg p { color: var(--tekst2); line-height: 1.65; font-size: .96rem; }
+  .om-meg a.epost {
+    display: inline-block; margin-top: 12px; padding: 10px 18px;
+    border-radius: 999px; background: var(--skum); color: var(--natt);
+    font-weight: 650; text-decoration: none; font-size: .93rem;
+  }
+
+  footer {
+    text-align: center; padding: 34px 24px 44px; font-size: .85rem;
+    color: var(--tekst3); line-height: 1.9;
+  }
+  footer a { color: inherit; }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <h1>Daniel Hellenes</h1>
+  <p class="tagline">Apper for livet langs kysten — laget på fritiden,
+  av en som bruker dem selv.</p>
+  <div class="vannlinje vl-1" aria-hidden="true">
+    <svg viewBox="0 0 1600 26" preserveAspectRatio="none">
+      <path d="M0,13 C100,5 200,21 400,13 C600,5 700,21 800,13 C900,5 1000,21 1200,13 C1400,5 1500,21 1600,13"
+            fill="none" stroke="rgba(244,249,252,.5)" stroke-width="2.5" stroke-linecap="round"/>
+    </svg>
+  </div>
+  <div class="vannlinje vl-2" aria-hidden="true">
+    <svg viewBox="0 0 1600 26" preserveAspectRatio="none">
+      <path d="M0,13 C120,7 240,19 400,13 C560,7 680,19 800,13 C920,7 1040,19 1200,13 C1360,7 1480,19 1600,13"
+            fill="none" stroke="rgba(244,249,252,.35)" stroke-width="1.6" stroke-linecap="round"/>
+    </svg>
+  </div>
+  <span class="boye boye-fof" aria-hidden="true"></span>
+  <span class="boye boye-hummer" aria-hidden="true"></span>
+</header>
+
+<main>
+  <div class="kort-rad">
+    <article class="appkort fof">
+      <img class="ikon" src="/floogfjare/ikon.png" alt="Flo og Fjære-ikonet">
+      <h2>Flo og Fjære</h2>
+      <p class="tag">Vannstand akkurat nå — uten internett</p>
+      <p class="om">Tidevannet som en levende sjø på skjermen: stiger
+      vannet i appen, stiger det i fjæra. Regnes ut på telefonen for
+      hele norskekysten — virker i flymodus, på hytta og i båten.</p>
+      <div class="chips">
+        <span class="chip">✈️ Virker uten dekning</span>
+        <span class="chip">🗺️ Data fra Kartverket</span>
+      </div>
+      <div class="handling">
+        <a href="https://apps.apple.com/no/app/id6794909612" aria-label="Last ned Flo og Fjære i App Store">
+          <img class="badge" src="/floogfjare/appstore-merke.svg" alt="Last ned i App Store">
+        </a>
+        <a class="lenke" href="/floogfjare/">Les mer</a>
+      </div>
+    </article>
+
+    <article class="appkort hummer">
+      <img class="ikon" src="/hummerfiske/ikon.png" alt="Hummerfiske-ikonet">
+      <h2>Hummerfiske</h2>
+      <p class="tag">Teiner, fangst og fredningssoner</p>
+      <p class="om">Røkteklokke på hver teine, Fiskeridirektoratets
+      fredningssoner på ekte sjøkart, og fangstlogg som viser hvor det
+      faktisk fisker best. Alt lagres på telefonen.</p>
+      <div class="chips">
+        <span class="chip">🦞 I App Store til sesongstart — oktober 2026</span>
+      </div>
+      <div class="handling">
+        <a class="knapp" href="/hummerfiske/">Les mer</a>
+      </div>
+    </article>
+  </div>
+
+  <section class="om-meg">
+    <h2>Om prosjektene</h2>
+    <p>Begge appene er laget av én person på fritiden, bygget på åpne
+    norske data — og uten sporing, annonser eller kontoer. Alle
+    henvendelser leses og besvares.</p>
+    <a class="epost" href="mailto:danielhellenes@me.com">Send e-post</a>
+  </section>
+</main>
+
+<footer>
+  © 2026 Daniel Hellenes<br>
+  <a href="/floogfjare/personvern/">Personvern — Flo og Fjære</a> ·
+  <a href="/hummerfiske/personvern/">Personvern — Hummerfiske</a>
+</footer>
+
+</body>
+</html>
