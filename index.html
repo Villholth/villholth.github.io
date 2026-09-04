@@ -123,10 +123,10 @@
     transform: translateY(-2px);
     box-shadow: 0 2px 4px rgba(22,24,29,.06), 0 24px 48px -28px rgba(22,24,29,.3);
   }
-  .app-topp { display: flex; align-items: center; gap: 16px; }
-  /* Flex-barn må få lov å krympe — ellers presser lange mono-linjer
-     navnet ut av kortet på smale skjermer */
-  .app-topp > div { flex: 1; min-width: 0; }
+  .app-topp { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+  /* Flex-barn må få lov å krympe — og på ULTRASMALE flater bryter
+     tekstkolonnen ned under ikonet i stedet for å klemmes */
+  .app-topp > div { flex: 1 1 150px; min-width: 0; }
   .app-topp img {
     width: 62px; height: 62px; border-radius: 14.5px;
     box-shadow: 0 4px 14px rgba(22,24,29,.18);
@@ -183,6 +183,13 @@
     text-decoration: none; transition: transform .12s ease;
   }
   a.epost:active { transform: scale(.97); }
+
+  @media (max-width: 420px) {
+    .logg { padding-left: 26px; }
+    .logg::before { left: 5px; }
+    .utgivelse::before { left: -23.5px; }
+    .appkort { padding: 20px; }
+  }
 
   footer {
     margin-top: 64px; padding: 26px 0 48px;
