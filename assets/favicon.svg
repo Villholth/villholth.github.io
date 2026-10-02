@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64">
+  <style>
+    .papir { fill: #F4F1EA; } .penn { stroke: #2441A6; } .markor { fill: #2441A6; }
+    @media (prefers-color-scheme: dark) { .papir { fill: #0F1012; } .penn { stroke: #93A9F2; } .markor { fill: #93A9F2; } }
+  </style>
+  <rect class="papir" width="64" height="64" rx="14"/>
+  <rect class="markor" x="36" y="10" width="6" height="26" rx="1.5"/>
+  <path class="penn" d="M39 36C39 50 24 44 20 56" fill="none" stroke-width="4" stroke-linecap="round"/>
+</svg>
